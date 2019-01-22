@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/customView" />
+            <option value="$PROJECT_DIR$/utilstest" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
