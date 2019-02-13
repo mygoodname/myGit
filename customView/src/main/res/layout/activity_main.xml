@@ -11,9 +11,10 @@
         android:layout_width="match_parent"
         />
     <Button
-        android:id="@+id/button"
+        android:id="@+id/sideslip"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:onClick="goOther"/>
+        android:text="@string/sideslip"
+        android:textColor="@color/colorAccent"/>
 
 </LinearLayout>
