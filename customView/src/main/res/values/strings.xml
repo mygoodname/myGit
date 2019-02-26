@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">My First Test Project</string>
     <string name="sideslip">侧滑删除列表</string>
+    <string name="deleteText">删除</string>
 </resources>
