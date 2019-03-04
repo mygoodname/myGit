@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CustomListViwActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".CommonActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
