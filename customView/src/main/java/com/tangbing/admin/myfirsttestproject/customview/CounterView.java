@@ -1,4 +1,4 @@
-package com.tangbing.admin.myfirsttestproject.viewtest_one;
+package com.tangbing.admin.myfirsttestproject.customview;
 
 import android.content.Context;
 import android.graphics.Canvas;

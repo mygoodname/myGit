@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.tangbing.admin.myfirsttestproject.adapter.CustomListViewAdapter;
-import com.tangbing.admin.myfirsttestproject.viewtest_one.CustomListView;
+import com.tangbing.admin.myfirsttestproject.customview.CustomListView;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.tangbing.admin.myfirsttestproject.viewtest_one;
+package com.tangbing.admin.myfirsttestproject.customview;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,9 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.tangbing.admin.myfirsttestproject.R;

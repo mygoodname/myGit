@@ -6,7 +6,7 @@
     tools:context="com.tangbing.admin.myfirsttestproject.MainActivity"
     android:orientation="vertical">
 
-    <com.tangbing.admin.myfirsttestproject.viewtest_one.CounterView
+    <com.tangbing.admin.myfirsttestproject.customview.CounterView
         android:layout_height="300dp"
         android:layout_width="match_parent"
         />
