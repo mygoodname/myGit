@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/animation/animation.iml" filepath="$PROJECT_DIR$/animation/animation.iml" />
       <module fileurl="file://F:\code\myGit\customView\app.iml" filepath="F:\code\myGit\customView\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/customView/customView.iml" filepath="$PROJECT_DIR$/customView/customView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/immersion/immersion.iml" filepath="$PROJECT_DIR$/immersion/immersion.iml" />
       <module fileurl="file://$PROJECT_DIR$/myGit.iml" filepath="$PROJECT_DIR$/myGit.iml" />
       <module fileurl="file://$PROJECT_DIR$/utilstest/utilstest.iml" filepath="$PROJECT_DIR$/utilstest/utilstest.iml" />
     </modules>

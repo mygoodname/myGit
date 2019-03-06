@@ -1,1 +1,1 @@
-include ':customView', ':utilstest', ':animation'
+include ':customView', ':utilstest', ':animation', ':immersion'
