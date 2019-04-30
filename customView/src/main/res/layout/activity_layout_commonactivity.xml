@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textColor="@color/colorAccent"
+            android:text="view自定义研究"
+            android:onClick="goCustomView"
+            android:gravity="center"
+            android:background="@color/colorPrimary"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textColor="@color/colorAccent"
+            android:text="侧滑删除列表"
+            android:onClick="customDeleteListView"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="5dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textColor="@color/colorAccent"
+            android:text="自定义progress"
+            android:onClick="customProgress"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="5dp"/>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

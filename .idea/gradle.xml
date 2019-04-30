@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/customView" />
             <option value="$PROJECT_DIR$/immersion" />
             <option value="$PROJECT_DIR$/utilstest" />
+            <option value="$PROJECT_DIR$/weixinshare" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
