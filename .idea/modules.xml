@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/myGit.iml" filepath="$PROJECT_DIR$/myGit.iml" />
       <module fileurl="file://$PROJECT_DIR$/utilstest/utilstest.iml" filepath="$PROJECT_DIR$/utilstest/utilstest.iml" />
       <module fileurl="file://$PROJECT_DIR$/weixinshare/weixinshare.iml" filepath="$PROJECT_DIR$/weixinshare/weixinshare.iml" />
+      <module fileurl="file://E:\code\myGit\weixinshare\weixinshare.iml" filepath="E:\code\myGit\weixinshare\weixinshare.iml" />
     </modules>
   </component>
 </project>
