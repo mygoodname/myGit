@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     @Override
     public boolean onDown(MotionEvent e) {
+
         return false;
     }
 

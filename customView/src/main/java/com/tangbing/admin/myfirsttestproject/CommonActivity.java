@@ -27,4 +27,7 @@ public class CommonActivity extends AppCompatActivity{
     public void customProgress(View view){
         ActivityUtils.startActivity(this,CustomProgressActivity.class);
     }
+    public void customWave(View view){
+        ActivityUtils.startActivity(this,WavyActivity.class);
+    }
 }
