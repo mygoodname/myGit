@@ -119,6 +119,6 @@ public class MyAudioStyleView extends View {
             );
         }
 // 使得view延迟重绘
-        postInvalidateDelayed(mSpeed);
+        postInvalidateDelayed(1000000000);
     }
 }

@@ -11,4 +11,14 @@
         android:gravity="center"
         android:onClick="goTest"
         />
+    <TextView
+        android:id="@+id/test1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="测试"
+        android:gravity="center"
+        android:onClick="goTest1"
+        android:layout_below="@+id/test"
+        android:layout_marginTop="10dp"
+        />
 </RelativeLayout>

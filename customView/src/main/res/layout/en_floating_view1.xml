@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="125dp"
+    android:layout_height="125dp"
+    android:background="@android:color/transparent">
+    <com.tangbing.admin.myfirsttestproject.customview.ScanRadar
+        android:id="@+id/scanView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+    <ImageView
+        android:id="@+id/imageShow"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/ic_close_audio"
+        android:layout_marginTop="34dp"
+        android:layout_marginStart="68dp"
+        android:visibility="gone"/>
+    <TextView
+        android:id="@+id/textShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取消收听"
+        android:textSize="9sp"
+        android:textColor="@color/ownColor1"
+        android:layout_marginTop="82dp"
+        android:layout_marginStart="49dp"
+        android:visibility="gone"/>
+</RelativeLayout>
