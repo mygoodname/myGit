@@ -30,4 +30,7 @@ public class CommonActivity extends AppCompatActivity{
     public void customWave(View view){
         ActivityUtils.startActivity(this,WavyActivity.class);
     }
+    public void customFloatingView(View view){
+        ActivityUtils.startActivity(this,FloatingRegionActivity.class);
+    }
 }

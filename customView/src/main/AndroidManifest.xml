@@ -19,6 +19,7 @@
         <activity android:name=".CustomListViwActivity" android:screenOrientation="portrait"/>
         <activity android:name=".CustomProgressActivity" android:screenOrientation="portrait"/>
         <activity android:name=".WavyActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".FloatingRegionActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
