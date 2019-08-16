@@ -1,12 +1,16 @@
 package com.tangbing.admin.myfirsttestproject.customview.floatView;
 
 import android.content.Context;
+import android.location.LocationListener;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
+
+import com.tangbing.admin.myfirsttestproject.AnimationEndListener;
+import com.tangbing.admin.myfirsttestproject.FloatBallLocationListener;
 import com.tangbing.admin.myfirsttestproject.FloatBallMoveListener;
 import com.tangbing.admin.myfirsttestproject.util.Utils;
 
@@ -21,6 +25,7 @@ import com.tangbing.admin.myfirsttestproject.util.Utils;
  */
 public class FloatingMagnetView extends FrameLayout {
     private FloatBallMoveListener floatBallMoveListener;
+    private FloatBallLocationListener locationListener;
     public static final int MARGIN_EDGE = 13;
     private float mOriginalRawX;
     private float mOriginalRawY;
@@ -74,6 +79,9 @@ public class FloatingMagnetView extends FrameLayout {
                 updateViewPosition(event);
                 break;
             case MotionEvent.ACTION_UP:
+                if(locationListener!=null){
+                    locationListener.hasContainer(getX(),getY()+80,true);
+                }
                 moveToEdge();
                 if (isOnClickEvent()) {
                     dealClickEvent();
@@ -115,6 +123,9 @@ public class FloatingMagnetView extends FrameLayout {
         }
         Log.d("updateViewPosition","mOriginalY: "+mOriginalY+"event.getRawY():"+event.getRawY()+"mOriginalRawY: "+mOriginalRawY+"desY: "+desY);
         setY(desY);
+        if(locationListener!=null){
+            locationListener.hasContainer(mOriginalX + event.getRawX() - mOriginalRawX,desY+80,false);
+        }
     }
 
     private void changeOriginalTouchParams(MotionEvent event) {
@@ -196,4 +207,7 @@ public class FloatingMagnetView extends FrameLayout {
         }
     }
 
+    public void setLocationListener(FloatBallLocationListener locationListener) {
+        this.locationListener = locationListener;
+    }
 }

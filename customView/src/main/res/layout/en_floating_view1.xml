@@ -16,6 +16,14 @@
         android:layout_marginTop="34dp"
         android:layout_marginStart="68dp"
         android:visibility="gone"/>
+    <ImageView
+        android:id="@+id/imageShow1"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@mipmap/ic_close_audio"
+        android:layout_marginTop="34dp"
+        android:layout_marginStart="68dp"
+        android:visibility="gone"/>
     <TextView
         android:id="@+id/textShow"
         android:layout_width="wrap_content"

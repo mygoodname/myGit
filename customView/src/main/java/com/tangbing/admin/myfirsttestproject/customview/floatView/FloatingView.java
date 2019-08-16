@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import com.tangbing.admin.myfirsttestproject.FloatBallLocationListener;
 import com.tangbing.admin.myfirsttestproject.FloatBallMoveListener;
 
 
@@ -44,6 +45,10 @@ public class FloatingView implements IFloatingView {
     public void setBallMoveLister(FloatBallMoveListener floatBallMoveListener){
         if(mEnFloatingView!=null)
         mEnFloatingView.setFloatBallMoveListener(floatBallMoveListener);
+    }
+    public void setLocationListener(FloatBallLocationListener floatBallMoveListener){
+        if(mEnFloatingView!=null)
+            mEnFloatingView.setLocationListener(floatBallMoveListener);
     }
     @Override
     public FloatingView remove() {

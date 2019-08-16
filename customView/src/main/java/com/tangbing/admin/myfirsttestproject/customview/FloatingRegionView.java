@@ -23,8 +23,8 @@ import com.tangbing.admin.myfirsttestproject.R;
  */
 
 public class FloatingRegionView extends FrameLayout{
-    ScanRadar scanView;
-    ImageView imageShow;
+    public ScanRadar scanView;
+    ImageView imageShow,imageShow1;
     TextView textShow;
     private AnimationEndListener animationEndListener;
     private Context context;
@@ -45,9 +45,25 @@ public class FloatingRegionView extends FrameLayout{
     private void initView(View view){
         scanView=view.findViewById(R.id.scanView);
         imageShow=view.findViewById(R.id.imageShow);
+        imageShow1=view.findViewById(R.id.imageShow1);
         textShow=view.findViewById(R.id.textShow);
     }
+    public void scaleImage(boolean isScale){
+        if(isScale){
+            imageShow.setVisibility(GONE);
+            imageShow1.setVisibility(VISIBLE);
+        }else {
+            imageShow.setVisibility(VISIBLE);
+            imageShow1.setVisibility(GONE);
+        }
 
+    }
+    public void hideLayout(){
+        imageShow.setVisibility(GONE);
+        imageShow1.setVisibility(GONE);
+        scanView.setVisibility(GONE);
+        textShow.setVisibility(GONE);
+    }
     public void translateAnimation(){
         if(scanView.getVisibility()==GONE){
             scanView.setVisibility(VISIBLE);
@@ -114,4 +130,5 @@ public class FloatingRegionView extends FrameLayout{
     public void setAnimationEndListener(AnimationEndListener animationEndListener) {
         this.animationEndListener = animationEndListener;
     }
+
 }

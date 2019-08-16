@@ -6,4 +6,11 @@ package com.tangbing.admin.myfirsttestproject;
 
 public interface AnimationEndListener {
      void end();
+
+    /**
+     * Created by tangbing on 2019/8/1.
+     * Describe :
+     */
+
+
 }
