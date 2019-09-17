@@ -1,19 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
-    tools:context="com.tangbing.admin.animation.MainActivity">
+    tools:context="com.tangbing.admin.animation.MainActivity"
+    android:orientation="vertical">
 
-    <com.tangbing.admin.animation.MyAudioStyleView
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        custom:AFCount="15"
-        custom:AFDownColor="@color/colorAccent"
-        custom:AFSpeed="300"
-        custom:AFTopColor="@color/colorPrimary"
-        custom:AFOffset="15"
-        />
-
-</android.support.constraint.ConstraintLayout>
+        android:layout_height="50dp"
+        android:id="@+id/audioChange"
+        android:text="音频动图"
+        android:background="@color/blue"
+        android:gravity="center"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/turnPage"
+        android:text="翻页动画"
+        android:gravity="center"
+        android:background="@color/blue"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/turnPage2"
+        android:text="翻页动画2"
+        android:gravity="center"
+        android:background="@color/blue"
+        android:layout_marginTop="10dp"/>
+</LinearLayout>
