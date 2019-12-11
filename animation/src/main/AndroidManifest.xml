@@ -19,6 +19,7 @@
         <activity android:name=".AudioChangeActivity"/>
         <activity android:name=".TurnPageActivity"/>
         <activity android:name=".PageActivity"/>
+        <activity android:name=".TurntestActivity"/>
     </application>
 
 </manifest>

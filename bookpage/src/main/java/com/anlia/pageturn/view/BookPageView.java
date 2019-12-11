@@ -256,15 +256,15 @@ public class BookPageView extends View {
         if (mScroller.computeScrollOffset()) {
             float x = mScroller.getCurrX();
             float y = mScroller.getCurrY();
-            if(style.equals(STYLE_TOP_RIGHT)){
+            /*if(style.equals(STYLE_TOP_RIGHT)){
                 setTouchPoint(x,y,STYLE_TOP_RIGHT);
             }else {
                 setTouchPoint(x,y,STYLE_LOWER_RIGHT);
-            }
-//            setTouchPoint(x,y,style);
-            if (mScroller.getFinalX() == x && mScroller.getFinalY() == y){
+            }*/
+            setTouchPoint(x,y,style);
+           /* if (mScroller.getFinalX() == x && mScroller.getFinalY() == y){
                 setDefaultPath();
-            }
+            }*/
         }
     }
 
@@ -320,7 +320,7 @@ public class BookPageView extends View {
             dx = (int) (viewWidth-1-a.x);
             dy = (int) (viewHeight-1-a.y);
         }
-        mScroller.startScroll((int) a.x, (int) a.y,-1080,0, 800);
+        mScroller.startScroll((int) a.x, (int) a.y,-1980,0, 800);
         isAudio=true;
     }
 

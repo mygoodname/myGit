@@ -31,4 +31,12 @@
         android:gravity="center"
         android:background="@color/blue"
         android:layout_marginTop="10dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/turnPage3"
+        android:text="翻页动画3"
+        android:gravity="center"
+        android:background="@color/blue"
+        android:layout_marginTop="10dp"/>
 </LinearLayout>
