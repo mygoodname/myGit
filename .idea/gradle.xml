@@ -13,6 +13,8 @@
             <option value="$PROJECT_DIR$/calendercheckdemo" />
             <option value="$PROJECT_DIR$/customView" />
             <option value="$PROJECT_DIR$/immersion" />
+            <option value="$PROJECT_DIR$/jniexampleproject" />
+            <option value="$PROJECT_DIR$/kotlindebug" />
             <option value="$PROJECT_DIR$/mygesturedetectortest" />
             <option value="$PROJECT_DIR$/mymatrixtest" />
             <option value="$PROJECT_DIR$/notification" />
@@ -23,6 +25,7 @@
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
+        <option name="testRunner" value="PLATFORM" />
       </GradleProjectSettings>
     </option>
   </component>

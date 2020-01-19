@@ -2,19 +2,16 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://F:\code\myGit\bookpage\BookPage-master.iml" filepath="F:\code\myGit\bookpage\BookPage-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/animation/animation.iml" filepath="$PROJECT_DIR$/animation/animation.iml" />
-      <module fileurl="file://F:\code\myGit\customView\app.iml" filepath="F:\code\myGit\customView\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/bookpage/bookpage.iml" filepath="$PROJECT_DIR$/bookpage/bookpage.iml" />
       <module fileurl="file://$PROJECT_DIR$/calendercheckdemo/calendercheckdemo.iml" filepath="$PROJECT_DIR$/calendercheckdemo/calendercheckdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/customView/customView.iml" filepath="$PROJECT_DIR$/customView/customView.iml" />
       <module fileurl="file://$PROJECT_DIR$/immersion/immersion.iml" filepath="$PROJECT_DIR$/immersion/immersion.iml" />
-      <module fileurl="file://F:\code\myGit\sanlib\lib.iml" filepath="F:\code\myGit\sanlib\lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jniexampleproject/jniexampleproject.iml" filepath="$PROJECT_DIR$/jniexampleproject/jniexampleproject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kotlindebug/kotlindebug.iml" filepath="$PROJECT_DIR$/kotlindebug/kotlindebug.iml" />
       <module fileurl="file://$PROJECT_DIR$/myGit.iml" filepath="$PROJECT_DIR$/myGit.iml" />
       <module fileurl="file://$PROJECT_DIR$/mygesturedetectortest/mygesturedetectortest.iml" filepath="$PROJECT_DIR$/mygesturedetectortest/mygesturedetectortest.iml" />
-      <module fileurl="file://E:\code\myGit\mygesturedetectortest\mygesturedetectortest.iml" filepath="E:\code\myGit\mygesturedetectortest\mygesturedetectortest.iml" />
       <module fileurl="file://$PROJECT_DIR$/mymatrixtest/mymatrixtest.iml" filepath="$PROJECT_DIR$/mymatrixtest/mymatrixtest.iml" />
-      <module fileurl="file://E:\code\myGit\mymatrixtest\mymatrixtest.iml" filepath="E:\code\myGit\mymatrixtest\mymatrixtest.iml" />
       <module fileurl="file://$PROJECT_DIR$/notification/notification.iml" filepath="$PROJECT_DIR$/notification/notification.iml" />
       <module fileurl="file://$PROJECT_DIR$/sanlib/sanlib.iml" filepath="$PROJECT_DIR$/sanlib/sanlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/utilstest/utilstest.iml" filepath="$PROJECT_DIR$/utilstest/utilstest.iml" />

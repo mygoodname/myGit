@@ -1,1 +1,1 @@
-include ':customView', ':utilstest', ':animation', ':immersion', ':calendercheckdemo', ':weixinshare', ':mymatrixtest', ':mygesturedetectortest', ':zxingtest', ':sanlib', ':bookpage', ':notification'
+include ':customView', ':utilstest', ':animation', ':immersion', ':calendercheckdemo', ':weixinshare', ':mymatrixtest', ':mygesturedetectortest', ':zxingtest', ':sanlib', ':bookpage', ':notification', ':jniexampleproject', ':kotlindebug'

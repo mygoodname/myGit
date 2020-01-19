@@ -40,7 +40,7 @@ public class PlayService extends Service {
     public static final String STARTSOTP_WINDWO = "com.kingchannels.kezhiphone.ui.read.audio.PlayService.STARTSOTP_WINDWO";
     public static final String STOPPLAY="com.kingchannels.kezhiphone.ui.read.audio.PlayService.STOP";
 
-    private String broadcastAction="playServiceAction";
+    private String broadcastAction = "com.haha.playServiceAction";
     private int mPlayingPosition;
     private MediaPlayer mMediaPlayer;
     private PowerManager.WakeLock mWakeLock = null;//获取设备电源锁，防止锁屏后服务被停止
@@ -85,8 +85,8 @@ public class PlayService extends Service {
             builder = new NotificationCompat.Builder(this);
             builder.setPriority(PRIORITY_DEFAULT);
         }
-//        setNotification();
-        sendNotification();
+        setNotification();
+//        sendNotification();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_DEFAULT);
             //数字是随便写的“40”，
@@ -99,16 +99,11 @@ public class PlayService extends Service {
     }
 
     private void sendNotification(){
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        Notification notification =new Notification();
+        Notification notification = builder.build();
 
         notification.icon=R.mipmap.ic_launcher;
 
         notification.when=System.currentTimeMillis();
-
-        notification.flags=Notification.FLAG_AUTO_CANCEL;
 
         //跳转意图
 
@@ -134,11 +129,11 @@ public class PlayService extends Service {
 
         //将RemoteView作为Notification的布局
 
-        notification.contentView =remoteViews;
+        notification.contentView =getContentView();
 
         //将pendingIntent作为Notification的intent，这样当点击其他部分时，也能实现跳转
 
-        notification.contentIntent=pendingIntent;
+//        notification.contentIntent=pendingIntent;
 
         notificationManager.notify(1,notification);
 
@@ -156,14 +151,48 @@ public class PlayService extends Service {
     }
 
     private void setNotification() {
-        notification = builder.setSmallIcon(R.mipmap.ic_launcher)
-                .setWhen(System.currentTimeMillis())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notification = builder.setSmallIcon(R.mipmap.ic_launcher)
+                    .setWhen(System.currentTimeMillis())
 //                .setContentIntent(getDefaultIntent())
-                .setCustomBigContentView(new RemoteViews(getPackageName(), R.layout.view_notify) )
+                    .setCustomBigContentView(new RemoteViews(getPackageName(), R.layout.view_notify) )
 //                .setAutoCancel(false)
-                .setChannelId(id)
-                .setCustomContentView(getContentView())
-                .build();
+                    .setChannelId(id)
+                    .setCustomContentView(getContentView())
+                    .build();
+        } else {
+            notification=builder.build();
+
+            notification.icon=R.mipmap.ic_launcher;
+
+            notification.when=System.currentTimeMillis();
+
+            //跳转意图
+
+            Intent intent = new Intent(this,SettingsActivity.class);
+
+            //建立一个RemoteView的布局，并通过RemoteView加载这个布局
+
+            RemoteViews remoteViews = new RemoteViews(getPackageName(),R.layout.view_notify);
+
+            //为remoteView设置图片和文本
+
+            remoteViews.setTextViewText(R.id.message,"第一条通知");
+
+            remoteViews.setImageViewResource(R.id.image,R.mipmap.ic_launcher_round);
+
+            //设置PendingIntent
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+            //为id为openActivity的view设置单击事件
+
+            remoteViews.setOnClickPendingIntent(R.id.audioPlay,pendingIntent);
+
+            //将RemoteView作为Notification的布局
+
+            notification.contentView =getContentView();
+        }
         notificationManager.notify(2, notification);
     }
 
@@ -187,27 +216,5 @@ public class PlayService extends Service {
         remoteViews.setOnClickPendingIntent(R.id.stop,stop);//点击的id，点击事件
         return remoteViews;
     }
-    public class NotificationBroadcast extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();//动作
-            if (action!=null&&action.equals(broadcastAction)) {
-                switch (intent.getStringExtra("playStatus")){
-                    case "-1":
-                        Log.e("NotificationBroadcast","-1");
-                        break;
-                    case "0":
-                        Log.e("NotificationBroadcast","0");
-                        break;
-                    case "1":
-                        Log.e("NotificationBroadcast","1");
-                        break;
-                    case "2":
-//                        AppContext.appContext.stopAudioPlayService();
-                        Log.e("NotificationBroadcast","2");
-                        break;
-                }
-            }
-        }
-    }
+
 }

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.tangbing.admin.notification.MainActivity">
+    tools:context="com.tangbing.admin.notification.MainActivity"
+    android:orientation="vertical"
+    android:gravity="center">
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,5 +22,14 @@
         android:layout_height="wrap_content"
         android:text="开启服务"
         android:onClick="startNotificationService"
+        android:layout_marginTop="20dp"
         />
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发送广播"
+        android:onClick="sendBroadcast"
+        android:layout_marginTop="20dp"
+
+        />
+</LinearLayout>

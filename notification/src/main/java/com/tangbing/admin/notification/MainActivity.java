@@ -18,7 +18,7 @@ import android.widget.Toast;
 import static android.support.v4.app.NotificationCompat.PRIORITY_DEFAULT;
 
 public class MainActivity extends AppCompatActivity {
-    private String broadcastAction="playServiceAction";
+    private String broadcastAction = "com.haha.playServiceAction";
     private NotificationManager notificationManager;
     private NotificationCompat.Builder builder;
     NotificationBroadcast notificationBroadcast;
@@ -31,12 +31,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+      /*  IntentFilter intentFilter=new IntentFilter(broadcastAction);
+        notificationBroadcast=new NotificationBroadcast();
+        registerReceiver(notificationBroadcast,intentFilter);*/
     }
     public void startNotification(View view){
 //        startNotification();
-        IntentFilter intentFilter=new IntentFilter(broadcastAction);
-        notificationBroadcast=new NotificationBroadcast();
-        registerReceiver(notificationBroadcast,intentFilter);
         sendNotification();
     }
     public void startNotificationService(View view){
@@ -46,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             startService(intent);
         }
+    }
+    public void sendBroadcast(View view){
+//        startNotification();
+        Intent intent=new Intent(broadcastAction);
+        intent.putExtra("playStatus","-1");
+        sendBroadcast(intent);
     }
     private void startNotification(){
         IntentFilter intentFilter=new IntentFilter(broadcastAction);
@@ -109,12 +115,13 @@ public class MainActivity extends AppCompatActivity {
 
         notification.when=System.currentTimeMillis();
 
-        notification.flags=Notification.FLAG_AUTO_CANCEL;
-
+        notification.priority=PRIORITY_DEFAULT;
         //跳转意图
 
-        Intent intent = new Intent(this,SettingsActivity.class);
-
+//        Intent intent = new Intent(this,SettingsActivity.class);
+        Intent intent=new Intent(this,NotificationBroadcast.class);
+        intent.setAction(broadcastAction);
+        intent.putExtra("playStatus","-1");
         //建立一个RemoteView的布局，并通过RemoteView加载这个布局
 
         RemoteViews remoteViews = new RemoteViews(getPackageName(),R.layout.view_notify);
@@ -127,7 +134,8 @@ public class MainActivity extends AppCompatActivity {
 
         //设置PendingIntent
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         //为id为openActivity的view设置单击事件
 
@@ -148,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         //取消绑定
-        unregisterReceiver(notificationBroadcast);
+//        unregisterReceiver(notificationBroadcast);
     }
 
 }
