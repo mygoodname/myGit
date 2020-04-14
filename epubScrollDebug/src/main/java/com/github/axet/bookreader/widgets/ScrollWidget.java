@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -15,6 +16,7 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -53,6 +55,8 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
     public LinearLayoutManager lm;
     public ScrollAdapter adapter = new ScrollAdapter();
     Gestures gesturesListener;
+    private final Paint myPaint = new Paint();
+    private String TAG = "debug";
 
     public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.PageHolder> {
         public ArrayList<PageCursor> pages = new ArrayList<>();
@@ -122,28 +126,21 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
             protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
                 int w = getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec);
                 int h = getMainAreaHeight();
-                if (fb.pluginview != null) {
-                    if (!fb.pluginview.reflow) {
-                        PageCursor c = current();
-                        h = (int) Math.ceil(fb.pluginview.getPageHeight(w, c));
-                    }
-                }
                 setMeasuredDimension(w, h);
             }
 
             PageCursor current() {
                 int page = holder.getAdapterPosition();
+                Log.e(TAG, "current page " + page);
                 if (page == -1)
                     return null;
-                if(page+1<pages.size()){
-                    return pages.get(page+1);
-                }
                 return pages.get(page);
             }
 
             @Override
             protected void onDraw(Canvas draw) {
                 final PageCursor c = current();
+                Log.e(TAG, "onDraw" + "  c " + c.toString());
                 if (c == null) {
                     invalidate();
                     return;
@@ -152,132 +149,24 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
                     drawCache(draw);
                     return;
                 }
-                if (fb.pluginview != null) {
-                    if (fb.pluginview.reflow) {
-                        final int page;
-                        final int index;
-                        if (c.start == null) {
-                            int p = c.end.getParagraphIndex();
-                            int i = c.end.getElementIndex();
-                            i = i - 1;
-                            if (i < 0)
-                                p = p - 1;
-                            else
-                                c.start = new ZLTextFixedPosition(p, i, 0);
-                            page = p;
-                            index = i;
-                        } else {
-                            page = c.start.getParagraphIndex();
-                            index = c.start.getElementIndex();
-                        }
-                        synchronized (lock) {
-                            final int w = getWidth();
-                            final int h = getHeight();
-                            if (thread == null) {
-                                if (fb.pluginview.reflower != null) {
-                                    if (fb.pluginview.reflower.page != page || fb.pluginview.reflower.count() == -1 || fb.pluginview.reflower.w != w || fb.pluginview.reflower.h != h) {
-                                        fb.pluginview.reflower.close();
-                                        fb.pluginview.reflower = null;
-                                    }
-                                }
-                            }
-                            if (fb.pluginview.reflower == null) {
-                                if (thread == null) {
-                                    thread = new Thread() {
-                                        @Override
-                                        public void run() {
-                                            int i = index;
-                                            Reflow reflower = new Reflow(getContext(), w, h, page, (FBReaderView.CustomView) fb.app.BookTextView, fb.book.info);
-                                            Bitmap bm = fb.pluginview.render(reflower.w, reflower.h, page);
-                                            reflower.load(bm);
-                                            if (reflower.count() > 0)
-                                                bm.recycle();
-                                            if (i < 0) {
-                                                i = reflower.emptyCount() + i;
-                                                c.start = new ZLTextFixedPosition(page, i, 0);
-                                            }
-                                            reflower.index = i;
-                                            synchronized (lock) {
-                                                fb.pluginview.reflower = reflower;
-                                                thread = null;
-                                            }
-                                        }
-                                    };
-                                    thread.setPriority(Thread.MIN_PRIORITY);
-                                    thread.start();
-                                }
-                            }
-                            if (thread != null) {
-                                if (time == null) {
-                                    PowerManager pm = (PowerManager) getContext().getSystemService(Context.POWER_SERVICE);
-                                    if (Build.VERSION.SDK_INT >= 21 && pm.isPowerSaveMode()) {
-                                        fb.postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                invalidate();
-                                            }
-                                        }, 1000);
-                                    } else {
-                                        time = new TimeAnimatorCompat();
-                                        time.start();
-                                        time.setTimeListener(new TimeAnimatorCompat.TimeListener() {
-                                            @Override
-                                            public void onTimeUpdate(TimeAnimatorCompat animation, long totalTime, long deltaTime) {
-                                                invalidate();
-                                            }
-                                        });
-                                    }
-                                }
-                                drawProgress(draw, page, index);
-                                return;
-                            }
-                            if (time != null) {
-                                time.cancel();
-                                time = null;
-                            }
-                            Canvas canvas = getCanvas(c);
-                            fb.pluginview.current.pageNumber = page;
-                            fb.pluginview.reflower.index = c.start.getElementIndex();
-                            if (fb.pluginview.reflower.count() > 0) {
-                                Bitmap bm = fb.pluginview.reflower.render(c.start.getElementIndex());
-                                Rect src = new Rect(0, 0, bm.getWidth(), bm.getHeight());
-                                Rect dst = new Rect(fb.app.BookTextView.getLeftMargin(), 0, fb.app.BookTextView.getLeftMargin() + fb.pluginview.reflower.rw, fb.pluginview.reflower.h);
-                                canvas.drawColor(Color.WHITE); // cache color always white
-                                canvas.drawBitmap(bm, src, dst, null); // cache paint always clean
-                                info = new Reflow.Info(fb.pluginview.reflower, c.start.getElementIndex());
-                            } else { // empty source page?
-                                fb.pluginview.drawWallpaper(canvas);
-                                fb.pluginview.drawPage(canvas, w, h, fb.pluginview.reflower.bm);
-                            }
-                            update();
-                            drawCache(draw);
-                            onReflowerDone();
-                        }
-                        return;
-                    }
-                    open(c);
-                    fb.pluginview.drawOnCanvas(getContext(), draw, getWidth(), getHeight(), ZLViewEnums.PageIndex.current, (FBReaderView.CustomView) fb.app.BookTextView, fb.book.info);
-                    update();
-                } else {
-                    open(c);
-                    final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
-                            fb.app.SystemInfo,
-                            draw,
-                            new ZLAndroidPaintContext.Geometry(
-                                    getWidth(),
-                                    getHeight(),
-                                    getWidth(),
-                                    getHeight(),
-                                    0,
-                                    0
-                            ),
-                            getVerticalScrollbarWidth()
-                    );
-                    fb.app.BookTextView.paint(context, ZLViewEnums.PageIndex.current);
-                    text = fb.app.BookTextView.myCurrentPage.TextElementMap;
-                    fb.app.BookTextView.myCurrentPage.TextElementMap = new ZLTextElementAreaVector();
-                    update();
-                }
+                open(c);
+                final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+                        fb.app.SystemInfo,
+                        draw,
+                        new ZLAndroidPaintContext.Geometry(
+                                getWidth(),
+                                getHeight(),
+                                getWidth(),
+                                getHeight(),
+                                0,
+                                0
+                        ),
+                        getVerticalScrollbarWidth()
+                );
+                fb.app.BookTextView.paint(context, ZLViewEnums.PageIndex.current);
+                text = fb.app.BookTextView.myCurrentPage.TextElementMap;
+                fb.app.BookTextView.myCurrentPage.TextElementMap = new ZLTextElementAreaVector();
+                update();
             }
 
             void drawProgress(Canvas canvas, int page, int index) {
@@ -413,25 +302,18 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
         }
 
         void open(PageCursor c) {
+            Log.e(TAG, "open  c  " + c.toString());
             if (c.start == null) {
-                if (fb.pluginview != null) {
-                    fb.pluginview.gotoPosition(c.end);
-                    fb.pluginview.onScrollingFinished(ZLViewEnums.PageIndex.previous);
-                    fb.pluginview.current.pageOffset = 0; // widget instanceof ScrollView
-                    c.update(getCurrent());
-                } else {
-                    fb.app.BookTextView.gotoPosition(c.end);
-                    fb.app.BookTextView.onScrollingFinished(ZLViewEnums.PageIndex.previous);
-                    c.update(getCurrent());
-                }
+                Log.e(TAG, "open  gotoPosition c.end  " + c.end.toString());
+                fb.app.BookTextView.gotoPosition(c.end);
+                fb.app.BookTextView.onScrollingFinished(ZLViewEnums.PageIndex.previous);
+                c.update(getCurrent());
             } else {
-                if (fb.pluginview != null)
-                    fb.pluginview.gotoPosition(c.start);
-                else {
-                    PageCursor cc = getCurrent();
-                    if (!cc.equals(c)) {
-                        fb.app.BookTextView.gotoPosition(c.start, c.end);
-                    }
+                PageCursor cc = getCurrent();
+                Log.e(TAG, "open  cc  " + cc.toString());
+                if (!cc.equals(c)) {
+                    Log.e(TAG, "open  gotoPosition  " + c.toString());
+                    fb.app.BookTextView.gotoPosition(c.start, c.end);
                 }
             }
         }
@@ -556,36 +438,16 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
         }
 
         PageCursor getCurrent() {
-            if (fb.pluginview != null) {
-                if (fb.pluginview.reflow) {
-                    if (fb.pluginview.reflower != null) {
-                        ZLTextFixedPosition s = new ZLTextFixedPosition(fb.pluginview.reflower.page, fb.pluginview.reflower.index, 0);
-                        ZLTextFixedPosition e;
-                        int index = s.ElementIndex + 1;
-                        if (fb.pluginview.reflower.count() == -1) {
-                            e = null;
-                        } else if (index >= fb.pluginview.reflower.count()) { // current points to next page +1
-                            e = new ZLTextFixedPosition(fb.pluginview.reflower.page + 1, 0, 0);
-                        } else {
-                            e = new ZLTextFixedPosition(s.ParagraphIndex, index, 0);
-                        }
-                        return new PageCursor(s, e);
-                    } else {
-                        return new PageCursor(new ZLTextFixedPosition(fb.pluginview.current.pageNumber, 0, 0), null);
-                    }
-                } else {
-                    return new PageCursor(fb.pluginview.getPosition(), fb.pluginview.getNextPosition());
-                }
-            } else {
                 return new PageCursor(fb.app.BookTextView.getStartCursor(), fb.app.BookTextView.getEndCursor());
-            }
         }
 
         void update() {
             if (fb.app.Model == null)
                 return;
             PageCursor c = getCurrent();
+            Log.e(TAG, "update  currentPageCursor  " + c.toString());
             int page;
+            //获取当前currentPage 在pages的位置
             for (page = 0; page < pages.size(); page++) {
                 PageCursor p = pages.get(page);
                 if (p.equals(c)) {
@@ -593,11 +455,14 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
                     break;
                 }
             }
+            Log.e("debug", "update  page  " + page + "  pages.size()  " + pages.size());
             if (page == pages.size()) { // not found == 0
                 pages.add(c);
                 notifyItemInserted(page);
             }
+
             if (fb.app.BookTextView.canScroll(ZLViewEnums.PageIndex.previous)) {
+                Log.e("debug", "update  canScroll(previous)  " + page + "  pages.size()  " + pages.size());
                 if (page == 0) {
                     pages.add(page, new PageCursor(null, c.start));
                     notifyItemInserted(page);
@@ -605,6 +470,7 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
                 }
             }
             if (fb.app.BookTextView.canScroll(ZLViewEnums.PageIndex.next)) {
+                Log.e("debug", "update  canScroll(next)  " + page + "  pages.size()  " + pages.size());
                 if (page == pages.size() - 1) {
                     page++;
                     pages.add(page, new PageCursor(c.end, null));
@@ -1079,67 +945,35 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
             gesturesListener.pinch.pinchClose();
         }
         super.draw(c);
+        Log.e(TAG, "draw");
         updatePosition();
         drawFooter(c);
     }
 
     void updatePosition() { // position can vary depend on which page drawn, restore it after every draw
         int first = findFirstPage();
+        Log.e(TAG, "updatePosition first " + first);
         if (first == -1)
             return;
-
         ScrollAdapter.PageCursor c = adapter.pages.get(first);
-
+        Log.e(TAG, "updatePosition first c " + c);
         ZLTextPosition pos = c.start;
         if (pos == null)
             pos = c.end;
-
-        if (fb.pluginview != null && fb.pluginview.reflow) {
-            if (c.start == null) {
-                int p = c.end.getParagraphIndex();
-                int i = c.end.getElementIndex() - 1;
-                if (i < 0)
-                    p = p - 1;
-                fb.pluginview.current.pageNumber = p;
-            } else {
-                fb.pluginview.current.pageNumber = c.start.getParagraphIndex();
-            }
-            fb.clearReflowPage(); // reset reflow page, since we treat pageOffset differently for reflower/full page view
-        } else {
-            adapter.open(c);
-            if (fb.scrollDelayed != null) {
-                if (fb.pluginview != null) {
-                    PluginPage info = fb.pluginview.getPageInfo(getWidth(), getHeight(), c);
-                    for (ScrollAdapter.PageCursor p : adapter.pages) {
-                        if (p.start != null && p.start.getParagraphIndex() == fb.scrollDelayed.getParagraphIndex()) {
-                            if (fb.scrollDelayed instanceof FBReaderView.ZLTextIndexPosition) {
-                                PluginView.Selection s = fb.pluginview.select(fb.scrollDelayed, ((FBReaderView.ZLTextIndexPosition) fb.scrollDelayed).end);
-                                PluginView.Selection.Page page = fb.pluginview.selectPage(fb.scrollDelayed, null, info.w, info.h);
-                                PluginView.Selection.Bounds bb = s.getBounds(page);
-                                s.close();
-                                Rect union = SelectionView.union(Arrays.asList(bb.rr));
-                                int offset = union.top;
-                                scrollBy(0, offset);
-                                adapter.oldTurn = pos;
-                            } else {
-                                int offset = (int) (fb.scrollDelayed.getElementIndex() / info.ratio);
-                                scrollBy(0, offset);
-                                adapter.oldTurn = pos;
-                            }
-                            fb.scrollDelayed = null;
-                            break;
-                        }
-                    }
-                } else {
-                    fb.gotoPosition(fb.scrollDelayed);
-                    adapter.oldTurn = pos;
-                    fb.scrollDelayed = null;
-                }
-            }
+        Log.e(TAG, "updatePosition pos " + pos.toString());
+        adapter.open(c);
+        if (fb.scrollDelayed != null) {
+            Log.e(TAG, "updatePosition fb.scrollDelayed " + fb.scrollDelayed.toString());
+                fb.gotoPosition(fb.scrollDelayed);
+                adapter.oldTurn = pos;
+                fb.scrollDelayed = null;
         }
+        Log.e(TAG, "updatePosition  adapter.oldTurn " + adapter.oldTurn.toString());
         if (!pos.equals(adapter.oldTurn)) {
-            if (fb.listener != null)
+            if (fb.listener != null) {
                 fb.listener.onScrollingFinished(ZLViewEnums.PageIndex.current);
+                Log.e(TAG, "updatePosition  fb.listener.onScrollingFinished");
+            }
             adapter.oldTurn = pos;
         }
     }
