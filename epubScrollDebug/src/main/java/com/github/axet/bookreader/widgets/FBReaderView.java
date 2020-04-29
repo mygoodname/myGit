@@ -110,6 +110,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextWordRegionSoul;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -1138,6 +1139,15 @@ public class FBReaderView extends RelativeLayout {
             removeView((View) widget);
         }
         widget = v;
+        if(v instanceof RecyclerView){
+            try {
+                Field field=((RecyclerView)v).getClass().getDeclaredField("mMaxFlingVelocity");
+                field.setAccessible(true);
+                field.set(v, 5);
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
         addView((View) v, 0, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         if (pos != null)
             gotoPosition(pos);

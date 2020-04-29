@@ -686,7 +686,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         super.onResume();
         ScreenlockPreference.onResume(getActivity(), BookApplication.PREFERENCE_SCREENLOCK);
 
-        battery = new BroadcastReceiver() {
+       /* battery = new BroadcastReceiver() {
             public void onReceive(Context context, Intent intent) {
                 int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
                 int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
@@ -694,9 +694,9 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
                 fb.invalidateFooter();
             }
         };
-        battery.onReceive(getContext(), getContext().registerReceiver(battery, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)));
+        battery.onReceive(getContext(), getContext().registerReceiver(battery, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)));*/
 
-        time.run();
+//        time.run();
 
         updateTheme(); // MainActivity.restartActivity() not called when double change while ReaderFragment active
     }

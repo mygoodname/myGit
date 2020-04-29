@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="delegatedBuild" value="false" />
+        <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
@@ -12,11 +15,13 @@
             <option value="$PROJECT_DIR$/bookpage" />
             <option value="$PROJECT_DIR$/calendercheckdemo" />
             <option value="$PROJECT_DIR$/customView" />
+            <option value="$PROJECT_DIR$/epubScrollDebug" />
             <option value="$PROJECT_DIR$/immersion" />
             <option value="$PROJECT_DIR$/jniexampleproject" />
             <option value="$PROJECT_DIR$/kotlindebug" />
             <option value="$PROJECT_DIR$/mygesturedetectortest" />
             <option value="$PROJECT_DIR$/mymatrixtest" />
+            <option value="$PROJECT_DIR$/nanonanohttpddebug" />
             <option value="$PROJECT_DIR$/notification" />
             <option value="$PROJECT_DIR$/sanlib" />
             <option value="$PROJECT_DIR$/utilstest" />
@@ -25,7 +30,6 @@
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
-        <option name="testRunner" value="PLATFORM" />
       </GradleProjectSettings>
     </option>
   </component>

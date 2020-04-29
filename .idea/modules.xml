@@ -2,21 +2,23 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/animation/animation.iml" filepath="$PROJECT_DIR$/animation/animation.iml" />
-      <module fileurl="file://$PROJECT_DIR$/bookpage/bookpage.iml" filepath="$PROJECT_DIR$/bookpage/bookpage.iml" />
-      <module fileurl="file://$PROJECT_DIR$/calendercheckdemo/calendercheckdemo.iml" filepath="$PROJECT_DIR$/calendercheckdemo/calendercheckdemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/customView/customView.iml" filepath="$PROJECT_DIR$/customView/customView.iml" />
-      <module fileurl="file://$PROJECT_DIR$/immersion/immersion.iml" filepath="$PROJECT_DIR$/immersion/immersion.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jniexampleproject/jniexampleproject.iml" filepath="$PROJECT_DIR$/jniexampleproject/jniexampleproject.iml" />
-      <module fileurl="file://$PROJECT_DIR$/kotlindebug/kotlindebug.iml" filepath="$PROJECT_DIR$/kotlindebug/kotlindebug.iml" />
-      <module fileurl="file://$PROJECT_DIR$/myGit.iml" filepath="$PROJECT_DIR$/myGit.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mygesturedetectortest/mygesturedetectortest.iml" filepath="$PROJECT_DIR$/mygesturedetectortest/mygesturedetectortest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mymatrixtest/mymatrixtest.iml" filepath="$PROJECT_DIR$/mymatrixtest/mymatrixtest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/notification/notification.iml" filepath="$PROJECT_DIR$/notification/notification.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sanlib/sanlib.iml" filepath="$PROJECT_DIR$/sanlib/sanlib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/utilstest/utilstest.iml" filepath="$PROJECT_DIR$/utilstest/utilstest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/weixinshare/weixinshare.iml" filepath="$PROJECT_DIR$/weixinshare/weixinshare.iml" />
-      <module fileurl="file://$PROJECT_DIR$/zxingtest/zxingtest.iml" filepath="$PROJECT_DIR$/zxingtest/zxingtest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/animation/animation.iml" filepath="$PROJECT_DIR$/animation/animation.iml" group="myGit/animation" />
+      <module fileurl="file://$PROJECT_DIR$/bookpage/bookpage.iml" filepath="$PROJECT_DIR$/bookpage/bookpage.iml" group="myGit/bookpage" />
+      <module fileurl="file://$PROJECT_DIR$/calendercheckdemo/calendercheckdemo.iml" filepath="$PROJECT_DIR$/calendercheckdemo/calendercheckdemo.iml" group="myGit/calendercheckdemo" />
+      <module fileurl="file://$PROJECT_DIR$/customView/customView.iml" filepath="$PROJECT_DIR$/customView/customView.iml" group="myGit/customView" />
+      <module fileurl="file://$PROJECT_DIR$/epubScrollDebug/epubScrollDebug.iml" filepath="$PROJECT_DIR$/epubScrollDebug/epubScrollDebug.iml" group="myGit/epubScrollDebug" />
+      <module fileurl="file://$PROJECT_DIR$/immersion/immersion.iml" filepath="$PROJECT_DIR$/immersion/immersion.iml" group="myGit/immersion" />
+      <module fileurl="file://$PROJECT_DIR$/jniexampleproject/jniexampleproject.iml" filepath="$PROJECT_DIR$/jniexampleproject/jniexampleproject.iml" group="myGit/jniexampleproject" />
+      <module fileurl="file://$PROJECT_DIR$/kotlindebug/kotlindebug.iml" filepath="$PROJECT_DIR$/kotlindebug/kotlindebug.iml" group="myGit/kotlindebug" />
+      <module fileurl="file://$PROJECT_DIR$/myGit.iml" filepath="$PROJECT_DIR$/myGit.iml" group="myGit" />
+      <module fileurl="file://$PROJECT_DIR$/mygesturedetectortest/mygesturedetectortest.iml" filepath="$PROJECT_DIR$/mygesturedetectortest/mygesturedetectortest.iml" group="myGit/mygesturedetectortest" />
+      <module fileurl="file://$PROJECT_DIR$/mymatrixtest/mymatrixtest.iml" filepath="$PROJECT_DIR$/mymatrixtest/mymatrixtest.iml" group="myGit/mymatrixtest" />
+      <module fileurl="file://$PROJECT_DIR$/nanonanohttpddebug/nanonanohttpddebug.iml" filepath="$PROJECT_DIR$/nanonanohttpddebug/nanonanohttpddebug.iml" group="myGit/nanonanohttpddebug" />
+      <module fileurl="file://$PROJECT_DIR$/notification/notification.iml" filepath="$PROJECT_DIR$/notification/notification.iml" group="myGit/notification" />
+      <module fileurl="file://$PROJECT_DIR$/sanlib/sanlib.iml" filepath="$PROJECT_DIR$/sanlib/sanlib.iml" group="myGit/sanlib" />
+      <module fileurl="file://$PROJECT_DIR$/utilstest/utilstest.iml" filepath="$PROJECT_DIR$/utilstest/utilstest.iml" group="myGit/utilstest" />
+      <module fileurl="file://$PROJECT_DIR$/weixinshare/weixinshare.iml" filepath="$PROJECT_DIR$/weixinshare/weixinshare.iml" group="myGit/weixinshare" />
+      <module fileurl="file://$PROJECT_DIR$/zxingtest/zxingtest.iml" filepath="$PROJECT_DIR$/zxingtest/zxingtest.iml" group="myGit/zxingtest" />
     </modules>
   </component>
 </project>

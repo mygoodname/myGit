@@ -60,4 +60,8 @@
     <attr format="dimension" name="outerSize"/>
     <attr format="boolean" name="reachCapRound"/>
   </declare-styleable>
+
+  <declare-styleable name="CircleViewStyle">
+    <attr name="circleColor" format="color">#303F9F</attr>>
+  </declare-styleable>
 </resources>

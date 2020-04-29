@@ -3,7 +3,6 @@ package com.github.axet.bookreader.widgets;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -26,7 +25,6 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.github.axet.androidlibrary.widgets.TopAlwaysSmoothScroller;
 import com.github.axet.bookreader.app.PDFPlugin;
 import com.github.axet.bookreader.app.Storage;
@@ -52,11 +50,14 @@ import java.util.TreeMap;
 
 public class ScrollWidget extends RecyclerView implements ZLViewWidget {
     FBReaderView fb;
+    private double speedRatio = 1;
+    private double scale = 0;
     public LinearLayoutManager lm;
     public ScrollAdapter adapter = new ScrollAdapter();
     Gestures gesturesListener;
     private final Paint myPaint = new Paint();
     private String TAG = "debug";
+
 
     public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.PageHolder> {
         public ArrayList<PageCursor> pages = new ArrayList<>();
@@ -140,49 +141,39 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
             @Override
             protected void onDraw(Canvas draw) {
                 final PageCursor c = current();
-                Log.e(TAG, "onDraw" + "  c " + c.toString());
                 if (c == null) {
                     invalidate();
                     return;
                 }
+                Log.e(TAG, "onDraw" + "  c " + c.toString());
                 if (isCached(c)) {
                     drawCache(draw);
                     return;
                 }
                 open(c);
-                final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
-                        fb.app.SystemInfo,
-                        draw,
-                        new ZLAndroidPaintContext.Geometry(
-                                getWidth(),
-                                getHeight(),
-                                getWidth(),
-                                getHeight(),
-                                0,
-                                0
-                        ),
-                        getVerticalScrollbarWidth()
-                );
-                fb.app.BookTextView.paint(context, ZLViewEnums.PageIndex.current);
+                if (bm != null) {
+                    draw.drawBitmap(bm, 0, 0, null);
+                    Log.e(TAG, "onDraw" + "  drawBitmap ");
+                } /*else {
+                    final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+                            fb.app.SystemInfo,
+                            draw,
+                            new ZLAndroidPaintContext.Geometry(
+                                    getWidth(),
+                                    getHeight(),
+                                    getWidth(),
+                                    getHeight(),
+                                    0,
+                                    0
+                            ),
+                            getVerticalScrollbarWidth()
+                    );
+                    fb.app.BookTextView.paint(context, ZLViewEnums.PageIndex.current);
+                    Log.e(TAG, "onDraw" + "  paint ");
+                }*/
                 text = fb.app.BookTextView.myCurrentPage.TextElementMap;
                 fb.app.BookTextView.myCurrentPage.TextElementMap = new ZLTextElementAreaVector();
                 update();
-            }
-
-            void drawProgress(Canvas canvas, int page, int index) {
-                canvas.drawColor(Color.GRAY);
-                canvas.save();
-                canvas.translate(getWidth() / 2 - progressBar.getMeasuredWidth() / 2, getHeight() / 2 - progressBar.getMeasuredHeight() / 2);
-
-                String t = (page + 1) + "." + (index == -1 ? "*" : index);
-                progressText.setText(t);
-
-                int dp60 = ThemeUtils.dp2px(getContext(), 60);
-                progress.measure(MeasureSpec.makeMeasureSpec(dp60, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(dp60, MeasureSpec.EXACTLY));
-                progress.layout(0, 0, dp60, dp60);
-                progress.draw(canvas);
-
-                canvas.restore();
             }
 
             void recycle() {
@@ -301,7 +292,7 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
         public ScrollAdapter() {
         }
 
-        void open(PageCursor c) {
+        void open(PageCursor c) {//打开c  移动BookTextView 到c
             Log.e(TAG, "open  c  " + c.toString());
             if (c.start == null) {
                 Log.e(TAG, "open  gotoPosition c.end  " + c.end.toString());
@@ -318,96 +309,22 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
             }
         }
 
-        public int findPos(ZLTextPosition p) {
-            for (int i = 0; i < pages.size(); i++) {
-                PageCursor c = pages.get(i);
-                if (c.start != null && c.start.samePositionAs(p))
-                    return i;
-            }
-            return -1;
-        }
-
-        public void loadPages(Reflow reflow) {
-            if (pages.size() == 0) {
-                int last = reflow.count() - 1;
-                for (int i = 0; i <= last; i++) {
-                    ZLTextPosition pos = new ZLTextFixedPosition(reflow.page, i, 0);
-                    ZLTextPosition end;
-                    if (i == last)
-                        end = null;
-                    else
-                        end = new ZLTextFixedPosition(reflow.page, i + 1, 0);
-                    pages.add(new PageCursor(pos, end));
-                    notifyItemInserted(i);
-                }
-            }
-            ZLTextPosition prev = new ZLTextFixedPosition(reflow.page - 1, 0, 0);
-            ZLTextPosition start = new ZLTextFixedPosition(reflow.page, 0, 0);
-            ZLTextPosition next = new ZLTextFixedPosition(reflow.page + 1, 0, 0);
-            for (int i = 0; i < pages.size(); i++) {
-                PageCursor c = pages.get(i);
-                boolean startTest = c.start != null && c.start.samePositionAs(start);
-                boolean prevTest = c.start != null && c.end != null && c.start.getParagraphIndex() == prev.getParagraphIndex() && i == (pages.size() - 1);
-                if (startTest || prevTest) { // update/add next reflow.count pages
-                    int last = reflow.count() - 1;
-                    for (int k = 0; k <= last; k++, i++) {
-                        if (i >= pages.size()) {
-                            c = new PageCursor(null, null);
-                            pages.add(c);
-                            notifyItemInserted(i);
-                        } else {
-                            c = pages.get(i);
-                        }
-                        ZLTextPosition pos = new ZLTextFixedPosition(reflow.page, k, 0);
-                        ZLTextPosition pos2;
-                        if (k == last)
-                            pos2 = null;
-                        else
-                            pos2 = new ZLTextFixedPosition(reflow.page, k + 1, 0);
-                        c.update(new PageCursor(pos, pos2));
-                    }
-                    return;
-                }
-                if (c.start != null && c.start.samePositionAs(next)) { // update/add prev reflow.count pages
-                    i--;
-                    int last = reflow.count() - 1;
-                    for (int k = last; k >= 0; k--, i--) {
-                        if (i < 0) {
-                            c = new PageCursor(null, null);
-                            pages.add(0, c);
-                            notifyItemInserted(i);
-                        } else {
-                            c = pages.get(i);
-                        }
-                        ZLTextPosition pos = new ZLTextFixedPosition(reflow.page, k, 0);
-                        ZLTextPosition pos2;
-                        if (k == last)
-                            pos2 = new ZLTextFixedPosition(start);
-                        else
-                            pos2 = new ZLTextFixedPosition(reflow.page, k + 1, 0);
-                        c.update(new PageCursor(pos, pos2));
-                    }
-                    return;
-                }
-            }
-            throw new RuntimeException("unable to load reflower");
-        }
-
         @Override
         public PageHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             return new PageHolder(new PageView(parent));
         }
 
         @Override
-        public void onBindViewHolder(PageHolder holder, int position) {
+        public void onBindViewHolder(final PageHolder holder, final int position) {
             holder.page.holder = holder;
+            Log.e(TAG, "onBindViewHolder  getAdapterPosition " + holder.getAdapterPosition() + "  position " + position);
             holders.add(holder);
         }
 
         @Override
         public void onViewRecycled(PageHolder holder) {
             super.onViewRecycled(holder);
-            holder.page.recycle();
+//            holder.page.recycle();
             holder.page.holder = null;
             holders.remove(holder);
         }
@@ -437,14 +354,15 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
             notifyDataSetChanged();
         }
 
+        //获取当前booktextView 起始position
         PageCursor getCurrent() {
-                return new PageCursor(fb.app.BookTextView.getStartCursor(), fb.app.BookTextView.getEndCursor());
+            return new PageCursor(fb.app.BookTextView.getStartCursor(), fb.app.BookTextView.getEndCursor());
         }
 
         void update() {
             if (fb.app.Model == null)
                 return;
-            PageCursor c = getCurrent();
+            final PageCursor c = getCurrent();
             Log.e(TAG, "update  currentPageCursor  " + c.toString());
             int page;
             //获取当前currentPage 在pages的位置
@@ -472,9 +390,91 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
             if (fb.app.BookTextView.canScroll(ZLViewEnums.PageIndex.next)) {
                 Log.e("debug", "update  canScroll(next)  " + page + "  pages.size()  " + pages.size());
                 if (page == pages.size() - 1) {
+                    Bitmap bm = null;
                     page++;
-                    pages.add(page, new PageCursor(c.end, null));
-                    notifyItemInserted(page);
+                    PageCursor cursor=new PageCursor(c.end, null);
+                    pages.add(page, cursor);
+                    bm=Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.RGB_565);
+                    final Bitmap finalBm = bm;
+                    final int finalPage = page;
+                    post(new Runnable() {
+                        @Override
+                        public void run() {
+                            final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+                                    fb.app.SystemInfo,
+                                    new Canvas(finalBm),
+                                    new ZLAndroidPaintContext.Geometry(
+                                            getWidth(),
+                                            getHeight(),
+                                            getWidth(),
+                                            getHeight(),
+                                            0,
+                                            0
+                                    ),
+                                    getVerticalScrollbarWidth()
+                            );
+                            fb.app.BookTextView.paint(context, ZLViewEnums.PageIndex.current);
+                            notifyItemInserted(finalPage);
+                        }
+                    });
+                    /*PageCursor cursor1=null;
+                    while (bitmapHashMap.size() < 3) {
+                        page++;
+                        fb.app.BookTextView.gotoPosition(cursor.start, null);
+                        c.update(getCurrent());
+
+                        pages.add(page, cursor);
+
+                        bm=Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.RGB_565);
+                        final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+                                fb.app.SystemInfo,
+                                new Canvas(bm),
+                                new ZLAndroidPaintContext.Geometry(
+                                        getWidth(),
+                                        getHeight(),
+                                        getWidth(),
+                                        getHeight()+1920,
+                                        0,
+                                        0
+                                ),
+                                getVerticalScrollbarWidth()
+                        );
+                        fb.app.BookTextView.paint(context, ZLViewEnums.PageIndex.current);
+                        bitmapHashMap.put(page, bm);
+
+                    }*/
+
+                    /* if(pages.get(position).start!=null){
+                Log.e(TAG,"onBindViewHolder  pages.get(position).start  "+pages.get(position).start.toString());
+                post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(pages.get(position).start!=null){
+                            fb.app.BookTextView.gotoPosition(pages.get(position).start, null);
+                            if(myCanvas!=null){
+                                holder.page.bm=Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.RGB_565);
+                                final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+                                        fb.app.SystemInfo,
+                                        new Canvas(holder.page.bm),
+                                        new ZLAndroidPaintContext.Geometry(
+                                                getWidth(),
+                                                getHeight(),
+                                                getWidth(),
+                                                getHeight()+1920,
+                                                0,
+                                                0
+                                        ),
+                                        getVerticalScrollbarWidth()
+                                );
+                                fb.app.BookTextView.paint(context, ZLViewEnums.PageIndex.current);
+                            }
+                        }
+                    }
+                });
+            }*/
+
+
+
                 }
             }
         }
@@ -665,8 +665,8 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
                 return true;
             onReleaseCheck(e);
             onCancelCheck(e);
-            if (brightness.onTouchEvent(e))
-                return true;
+          /*  if (brightness.onTouchEvent(e))
+                return true;*/
             if (gestures.onTouchEvent(e))
                 return true;
             if (onFilter(e))
@@ -686,7 +686,7 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
             Runnable idle = new Runnable() {
                 @Override
                 public void run() {
-                    if (idley >= 0) {
+                   /* if (idley >= 0) {
                         int page = findLastPage();
                         int next = page + 1;
                         if (next < adapter.pages.size()) {
@@ -702,18 +702,27 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
                             if (h != null)
                                 h.itemView.draw(new Canvas());
                         }
-                    }
+                    }*/
                 }
             };
 
             @Override
             public int scrollVerticallyBy(int dy, Recycler recycler, State state) {
-                int off = super.scrollVerticallyBy(dy, recycler, state);
+//                int off = super.scrollVerticallyBy((int)(speedRatio*dy), recycler, state);
+                int a = super.scrollVerticallyBy((int) (speedRatio * dy), recycler, state);//屏蔽之后无滑动效果，证明滑动的效果就是由这个函数实现
+                if (a == (int) (speedRatio * dy)) {
+                    return dy;
+                }
                 if (fb.pluginview != null)
                     updateOverlays();
                 idley = dy;
                 fb.removeCallbacks(idle);
-                return off;
+                return a;
+                /*if (fb.pluginview != null)
+                    updateOverlays();
+                idley = dy;
+                fb.removeCallbacks(idle);
+                return off;*/
             }
 
             @Override
@@ -761,7 +770,7 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
             setPadding(0, 0, 0, footer.getHeight());
 
         setItemAnimator(null);
-
+        setNestedScrollingEnabled(false);
         fb.config.setValue(fb.app.PageTurningOptions.FingerScrolling, PageTurningOptions.FingerScrollingType.byFlick);
     }
 
@@ -823,6 +832,7 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
 
     public int getViewPercent(View view) {
         int h = 0;
+        int hp = 0;
         int b = getMainAreaHeight();
         if (view.getBottom() > 0)
             h = view.getBottom(); // visible height
@@ -830,7 +840,8 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
             h -= view.getBottom() - b;
         if (view.getTop() > 0)
             h -= view.getTop();
-        int hp = h * 100 / view.getHeight();
+        if (view.getHeight() != 0)
+            hp = h * 100 / view.getHeight();
         return hp;
     }
 
@@ -872,18 +883,11 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
         return -1;
     }
 
-    int findLastPage() {
-        TreeMap<Integer, View> hp0 = new TreeMap<>();
-        for (int i = 0; i < lm.getChildCount(); i++) {
-            View v = lm.getChildAt(i);
-            int hp = getViewPercent(v);
-            if (hp > 0)
-                hp0.put(v.getTop(), v);
-        }
-        if (hp0.isEmpty())
-            return -1;
-        ScrollAdapter.PageView v = (ScrollAdapter.PageView) hp0.lastEntry().getValue();
-        return v.holder.getAdapterPosition();
+
+    @Override
+    public boolean fling(int velocityX, int velocityY) {
+        velocityY *= scale;
+        return super.fling(velocityX, velocityY);
     }
 
     @Override
@@ -945,7 +949,6 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
             gesturesListener.pinch.pinchClose();
         }
         super.draw(c);
-        Log.e(TAG, "draw");
         updatePosition();
         drawFooter(c);
     }
@@ -964,9 +967,9 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
         adapter.open(c);
         if (fb.scrollDelayed != null) {
             Log.e(TAG, "updatePosition fb.scrollDelayed " + fb.scrollDelayed.toString());
-                fb.gotoPosition(fb.scrollDelayed);
-                adapter.oldTurn = pos;
-                fb.scrollDelayed = null;
+            fb.gotoPosition(fb.scrollDelayed);
+            adapter.oldTurn = pos;
+            fb.scrollDelayed = null;
         }
         Log.e(TAG, "updatePosition  adapter.oldTurn " + adapter.oldTurn.toString());
         if (!pos.equals(adapter.oldTurn)) {
@@ -1007,84 +1010,6 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
     public int getMainAreaHeight() {
         final ZLView.FooterArea footer = fb.app.BookTextView.getFooterArea();
         return footer != null ? getHeight() - footer.getHeight() : getHeight();
-    }
-
-    public void onReflowerDone() {
-        if (fb.search != null) {
-            if (fb.searchPagePending != -1) {
-                final int p = fb.searchPagePending;
-                fb.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        searchPage(p);
-                    }
-                });
-                fb.searchPagePending = -1;
-            }
-        }
-        if (fb.selection != null) {
-            fb.post(new Runnable() {
-                @Override
-                public void run() {
-                    updateOverlays();
-                }
-            });
-        }
-        if (fb.scrollDelayed != null) {
-            adapter.loadPages(fb.pluginview.reflower);
-            for (int i = 0; i < adapter.pages.size(); i++) {
-                ScrollAdapter.PageCursor c = adapter.pages.get(i);
-                PluginPage pinfo = fb.pluginview.getPageInfo(getWidth(), getHeight(), c);
-                if (c.start != null && c.start.getParagraphIndex() == fb.scrollDelayed.getParagraphIndex()) {
-                    Reflow.Info info = new Reflow.Info(fb.pluginview.reflower, c.start.getElementIndex());
-                    double ratio = info.bm.width() / (double) getWidth();
-                    ArrayList<Rect> ss = new ArrayList<>(info.src.keySet());
-                    Collections.sort(ss, new SelectionView.UL());
-                    int offset;
-                    if (fb.scrollDelayed instanceof FBReaderView.ZLTextIndexPosition) {
-                        PluginView.Selection s = fb.pluginview.select(fb.scrollDelayed, ((FBReaderView.ZLTextIndexPosition) fb.scrollDelayed).end);
-                        PluginView.Selection.Page page = fb.pluginview.selectPage(fb.scrollDelayed, info, pinfo.w, pinfo.h);
-                        PluginView.Selection.Bounds bb = s.getBounds(page);
-                        s.close();
-                        Rect union = SelectionView.union(Arrays.asList(bb.rr));
-                        offset = union.top;
-                    } else {
-                        offset = (int) (fb.scrollDelayed.getElementIndex() / pinfo.ratio * ratio);
-                    }
-                    for (Rect s : ss) {
-                        if (s.top <= offset && s.bottom >= offset || s.top > offset) {
-                            scrollToPosition(i);
-                            int screen = (int) ((s.top - offset) / ratio);
-                            int off = info.src.get(s).top - screen;
-                            if (off > 0)
-                                scrollBy(0, off);
-                            fb.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    updateOverlays();
-                                }
-                            });
-                            adapter.oldTurn = new ZLTextFixedPosition(c.start);
-                            fb.scrollDelayed = null;
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-        lm.onScrollStateChanged(SCROLL_STATE_IDLE);
-    }
-
-    public void overlayRemove(ScrollAdapter.PageView view) {
-        selectionRemove(view);
-        linksRemove(view);
-        searchRemove(view);
-    }
-
-    public void overlaysClose() {
-        for (ScrollAdapter.PageHolder h : adapter.holders) {
-            overlayRemove(h.page);
-        }
     }
 
     public void updateOverlays() {
@@ -1192,93 +1117,58 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
 
     @SuppressWarnings("unchecked")
     public void searchPage(int page) {
-        if (fb.pluginview.reflow) {
-            if (fb.pluginview.reflower != null && fb.pluginview.reflower.page == page) {
-                for (int i = 0; i < fb.pluginview.reflower.count(); i++) {
-                    Reflow.Info info = new Reflow.Info(fb.pluginview.reflower, i);
-                    ZLTextPosition pos = new ZLTextFixedPosition(page, i, 0);
-                    PluginView.Selection.Page p = fb.pluginview.selectPage(pos, info, fb.pluginview.reflower.w, fb.pluginview.reflower.h);
+        for (ScrollAdapter.PageHolder holder : adapter.holders) {
+            int pos = holder.getAdapterPosition();
+            if (pos != -1) {
+                ScrollAdapter.PageCursor c = adapter.pages.get(pos);
+                if (c.start != null && c.start.getParagraphIndex() == page) {
+                    PluginView.Selection.Page p = fb.pluginview.selectPage(c.start, holder.page.info, holder.page.getWidth(), holder.page.getHeight());
                     PluginView.Search.Bounds bb = fb.search.getBounds(p);
                     if (bb.rr != null) {
-                        bb.rr = fb.pluginview.boundsUpdate(bb.rr, info);
                         if (bb.highlight != null) {
-                            HashSet hh = new HashSet(Arrays.asList(fb.pluginview.boundsUpdate(bb.highlight, info)));
+                            HashSet hh = new HashSet(Arrays.asList(bb.highlight));
                             for (Rect r : bb.rr) {
                                 if (hh.contains(r)) {
-                                    adapter.loadPages(fb.pluginview.reflower);
-                                    final int pp = adapter.findPos(pos);
-                                    if (pp != -1) {
-                                        smoothScrollToPosition(pp);
-                                        searchClose(); // remove all SearchView
-                                        updateOverlays();
-                                        return;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                searchClose(); // remove all SearchView
-                updateOverlays();
-                return; // reflow missing for symbol (treated as image)
-            }
-            fb.searchPagePending = page;
-            fb.pluginview.gotoPosition(new ZLTextFixedPosition(page, 0, 0));
-            fb.resetNewPosition();
-        } else {
-            for (ScrollAdapter.PageHolder holder : adapter.holders) {
-                int pos = holder.getAdapterPosition();
-                if (pos != -1) {
-                    ScrollAdapter.PageCursor c = adapter.pages.get(pos);
-                    if (c.start != null && c.start.getParagraphIndex() == page) {
-                        PluginView.Selection.Page p = fb.pluginview.selectPage(c.start, holder.page.info, holder.page.getWidth(), holder.page.getHeight());
-                        PluginView.Search.Bounds bb = fb.search.getBounds(p);
-                        if (bb.rr != null) {
-                            if (bb.highlight != null) {
-                                HashSet hh = new HashSet(Arrays.asList(bb.highlight));
-                                for (Rect r : bb.rr) {
-                                    if (hh.contains(r)) {
-                                        int h = getMainAreaHeight();
-                                        int bottom = getTop() + h;
-                                        int y = r.top + holder.page.getTop();
+                                    int h = getMainAreaHeight();
+                                    int bottom = getTop() + h;
+                                    int y = r.top + holder.page.getTop();
+                                    if (y > bottom) {
+                                        int dy = y - bottom;
+                                        int pages = dy / getHeight() + 1;
+                                        smoothScrollBy(0, pages * h);
+                                    } else {
+                                        y = r.bottom + holder.page.getTop();
                                         if (y > bottom) {
                                             int dy = y - bottom;
-                                            int pages = dy / getHeight() + 1;
-                                            smoothScrollBy(0, pages * h);
-                                        } else {
-                                            y = r.bottom + holder.page.getTop();
-                                            if (y > bottom) {
-                                                int dy = y - bottom;
-                                                smoothScrollBy(0, dy);
-                                            }
+                                            smoothScrollBy(0, dy);
                                         }
-                                        y = r.bottom + holder.page.getTop();
+                                    }
+                                    y = r.bottom + holder.page.getTop();
+                                    if (y < getTop()) {
+                                        int dy = y - getTop();
+                                        int pages = dy / getHeight() - 1;
+                                        smoothScrollBy(0, pages * h);
+                                    } else {
+                                        y = r.top + holder.page.getTop();
                                         if (y < getTop()) {
                                             int dy = y - getTop();
-                                            int pages = dy / getHeight() - 1;
-                                            smoothScrollBy(0, pages * h);
-                                        } else {
-                                            y = r.top + holder.page.getTop();
-                                            if (y < getTop()) {
-                                                int dy = y - getTop();
-                                                smoothScrollBy(0, dy);
-                                            }
+                                            smoothScrollBy(0, dy);
                                         }
-                                        searchClose();
-                                        updateOverlays();
-                                        return;
                                     }
+                                    searchClose();
+                                    updateOverlays();
+                                    return;
                                 }
                             }
-                            return;
                         }
+                        return;
                     }
                 }
             }
-            ZLTextPosition pp = new ZLTextFixedPosition(page, 0, 0);
-            fb.gotoPluginPosition(pp);
-            fb.resetNewPosition();
         }
+        ZLTextPosition pp = new ZLTextFixedPosition(page, 0, 0);
+        fb.gotoPluginPosition(pp);
+        fb.resetNewPosition();
     }
 
     public void searchClose() {
