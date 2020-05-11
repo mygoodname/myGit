@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/texthaha"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@android:color/holo_red_dark"/>
+    </LinearLayout>
+    <!--<data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type=" com.tangbing.admin.kotlindebug.model.ContenModel" />
+    </data>-->
+
+   <!-- <LinearLayout
+        android:id="@+id/parent_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/actionbar_height"
+            android:background="@color/actionbar_color"
+            android:orientation="vertical"
+            android:id="@+id/headTitle">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="50dp"
+                android:layout_height="0dp"
+                android:background="@drawable/kc_selector_transparent_dark"
+                android:padding="@dimen/space_17"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/ic_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingLeft="100dp"
+                android:paddingRight="100dp"
+                android:text='@{viewModel.topTitle??""}'
+                android:textColor="@color/txt_color_333333"
+                android:textSize="19sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/topNavigationLayout"
+                app:layout_constraintLeft_toLeftOf="@+id/back"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/topNavigationLayout" />
+
+            <LinearLayout
+                android:id="@+id/topNavigationLayout"
+                android:layout_width="220dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                android:visibility="@{viewModel.isShowNavigationLayout ? View.VISIBLE : View.GONE }"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/detail_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="详情"
+                    android:textColor="@color/ic_detail_select_text_color" />
+
+                <TextView
+                    android:id="@+id/catalog_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="目录"
+                    android:textColor="@color/ic_detail_select_text_color" />
+
+                <TextView
+                    android:id="@+id/comment_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="评论"
+                    android:textColor="@color/ic_detail_select_text_color" />
+
+                <TextView
+                    android:id="@+id/recommend_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="推荐"
+                    android:textColor="@color/ic_detail_select_text_color" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/share"
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/kc_selector_transparent_dark"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/ic_share"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/more"
+                android:layout_width="40dp"
+                android:layout_height="0dp"
+                android:background="@drawable/kc_selector_transparent_dark"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/more"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#f5f5f5"
+            android:visibility="gone"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.kingchannels.kezhiphone.ui.product.MyNestedScrollView
+                android:id="@+id/nesscroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="54dp"
+                android:fillViewport="true"
+                android:visibility="@{viewModel.statusLoading ? View.GONE : View.VISIBLE}">
+
+                <LinearLayout
+                    android:id="@+id/detail_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:descendantFocusability="blocksDescendants"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/relativeLayout_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/heard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_15"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="113dp"
+                                    android:layout_height="150dp"
+                                    android:layout_marginStart="16dp"
+                                    android:background="@color/transparent_dark_1"
+                                    android:scaleType="centerInside"
+                                    android:src="@mipmap/ic_default" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="260dp"
+                                        android:layout_height="20dp"
+                                        android:layout_marginStart="30dp"
+                                        android:layout_marginTop="10dp"
+                                        android:background="@color/transparent_dark_1" />
+
+                                    <View
+                                        android:layout_width="150dp"
+                                        android:layout_height="20dp"
+                                        android:layout_marginStart="30dp"
+                                        android:layout_marginTop="10dp"
+                                        android:background="@color/transparent_dark_1" />
+
+                                    <View
+                                        android:layout_width="220dp"
+                                        android:layout_height="20dp"
+                                        android:layout_marginStart="30dp"
+                                        android:layout_marginTop="10dp"
+                                        android:background="@color/transparent_dark_1" />
+
+                                    <View
+                                        android:layout_width="200dp"
+                                        android:layout_height="20dp"
+                                        android:layout_marginStart="30dp"
+                                        android:layout_marginTop="10dp"
+                                        android:background="@color/transparent_dark_1" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/list_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#fff0f0f0" />
+
+                        <android.support.constraint.ConstraintLayout
+                            android:id="@+id/allMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginStart="15dp"
+                            android:visibility="@{viewModel.isBook.get()?View.GONE:View.VISIBLE}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent">
+
+                            <TextView
+                                android:id="@+id/abs"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:text="@string/abs"
+                                android:textColor="@color/ic_detail_select_text_color"
+                                android:textSize="@dimen/txt_16"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/catalogShow"
+                                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/catalogShow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:text="@string/catalog"
+                                android:textColor="@color/ic_detail_select_text_color"
+                                android:textSize="@dimen/txt_16"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/commentShow"
+                                app:layout_constraintStart_toEndOf="@+id/abs"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/commentShow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:text="@string/comment"
+                                android:textColor="@color/ic_detail_select_text_color"
+                                android:textSize="@dimen/txt_16"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/recommendShow"
+                                app:layout_constraintStart_toEndOf="@+id/catalogShow"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/recommendShow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:text="@string/recommend"
+                                android:textColor="@color/ic_detail_select_text_color"
+                                android:textSize="@dimen/txt_16"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toEndOf="@+id/commentShow"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </android.support.constraint.ConstraintLayout>
+
+                        <LinearLayout
+                            android:id="@+id/catalog_parent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:gravity="center_vertical"
+                            android:nestedScrollingEnabled="false"
+                            android:orientation="vertical"
+                            android:visibility="@{viewModel.isBook.get()?View.VISIBLE:View.GONE}"
+                            tools:visibility="visible">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:paddingBottom="@dimen/space_10"
+                                android:paddingTop="@dimen/space_10"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/txt_color_333333"
+                                    android:textSize="@dimen/text_16sp"
+                                    android:textStyle="bold"
+                                    android:text="目录"
+                                    />
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text='@{viewModel.catalogText??""}'
+                                    android:textColor="@color/txt_color_333333"
+                                    android:textSize="@dimen/text_15sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="@dimen/space_5"
+                                    android:text="查看全部"
+                                    android:textColor="@color/color_eb5404"
+                                    android:textSize="@dimen/txt_14"
+                                    android:visibility="@{viewModel.isCatalog.get()?View.VISIBLE:View.GONE}"/>
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="@dimen/space_15"
+                                    android:src="@mipmap/kc_ic_arrow_right_3"
+                                    android:visibility="@{viewModel.isCatalog.get()?View.VISIBLE:View.GONE}"/>
+                            </LinearLayout>
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/catalogRec"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="5dp"
+                            android:background="#fff0f0f0"
+                            android:visibility="@{viewModel.isBook.get()?View.VISIBLE:View.GONE}" />
+
+                        <LinearLayout
+                            android:id="@+id/comment_parent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:gravity="center_vertical"
+                            android:nestedScrollingEnabled="false"
+                            android:orientation="vertical"
+                            android:visibility="@{viewModel.isBook.get()?View.VISIBLE:View.GONE}">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/txt_color_333333"
+                                    android:textSize="@dimen/text_16sp"
+                                    android:textStyle="bold"
+                                    android:text="评论"
+                                    />
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text='@{viewModel.commentCount??""}'
+                                    android:textColor="@color/txt_color_333333"
+                                    android:textSize="@dimen/text_15sp" />
+
+                                <TextView
+                                    android:id="@+id/commentMore"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="@dimen/space_5"
+                                    android:text="查看全部"
+                                    android:textColor="@color/color_eb5404"
+                                    android:textSize="@dimen/txt_14"
+                                    android:visibility='@{viewModel.isShowMoreComment.get() ? View.VISIBLE:View.GONE }'/>
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="@dimen/space_15"
+                                    android:src="@mipmap/kc_ic_arrow_right_3"
+                                    android:visibility='@{viewModel.isShowMoreComment.get() ? View.VISIBLE:View.GONE }'/>
+                            </LinearLayout>
+
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/commentRec"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/space_15" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="5dp"
+                            android:background="#fff0f0f0"
+                            android:visibility="@{viewModel.isBook.get()?View.VISIBLE:View.GONE}" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#fff0f0f0"
+                            android:visibility="@{viewModel.isBook.get()?View.GONE:View.VISIBLE}" />
+
+                        <FrameLayout
+                            android:id="@+id/frame_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="@dimen/afc_20dp"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </com.kingchannels.kezhiphone.ui.product.MyNestedScrollView>
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_above="@+id/bottom_layout"
+                android:background="@drawable/shape_gradient_graylight_gray_bg2" />
+
+            <LinearLayout
+                android:id="@+id/bottom_layout"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_alignParentBottom="true"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/addShopCar"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2.4"
+                    android:background="#ffffffff"
+                    android:gravity="center"
+                    android:text="加入购物车"
+                    android:textColor="#ED5B0B"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/addBookrack"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="#ffffffff"
+                    android:gravity="center"
+                    android:text='@{viewModel.addBookShelfText??""}'
+                    android:textColor="#ED5B0B"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="2">
+
+                    <hc.library.common.view.progress.TextDownloadView
+                        android:id="@+id/textRead"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#ED5B0B"
+                        android:gravity="center"
+                        android:text='@{viewModel.onlineReadText??""}'
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_16sp"
+                        android:visibility="@{viewModel.textDownloadViewIsShow ? View.VISIBLE : View.GONE }" />
+                    <ImageView
+                        android:id="@+id/moreFormat"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:src="@mipmap/ic_trilateral"
+                        android:scaleType="fitCenter"
+                        android:padding="15dp"
+                        android:visibility="@{viewModel.isShowMoreFormat ? View.VISIBLE : View.GONE }"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/contentBuyNow"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#ED5B0B"
+                    android:gravity="center"
+                    android:text="立即购买"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/default_loading_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{viewModel.statusLoading ? View.VISIBLE : View.GONE }"
+                tools:visibility="gone">
+
+                <include layout="@layout/default_loading" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </LinearLayout>-->
+</layout>

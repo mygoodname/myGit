@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <com.tangbing.admin.myfirsttestproject.customview.CounterView
         android:layout_height="300dp"
         android:layout_width="match_parent"
@@ -12,6 +13,8 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         app:circleColor="@color/ownColor"
+        app:circleWidth="100dp"
+        app:circleHeight="100dp"
         android:paddingTop="50dp">
 
     </com.tangbing.admin.myfirsttestproject.customview.CircleView>

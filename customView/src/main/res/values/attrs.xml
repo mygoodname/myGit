@@ -62,6 +62,8 @@
   </declare-styleable>
 
   <declare-styleable name="CircleViewStyle">
-    <attr name="circleColor" format="color">#303F9F</attr>>
+    <attr name="circleColor" format="color">#303F9F</attr>
+    <attr name="circleWidth" format="dimension"/>
+    <attr name="circleHeight" format="dimension"/>
   </declare-styleable>
 </resources>

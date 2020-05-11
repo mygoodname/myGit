@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/customView/customView.iml" filepath="$PROJECT_DIR$/customView/customView.iml" group="myGit/customView" />
       <module fileurl="file://$PROJECT_DIR$/epubScrollDebug/epubScrollDebug.iml" filepath="$PROJECT_DIR$/epubScrollDebug/epubScrollDebug.iml" group="myGit/epubScrollDebug" />
       <module fileurl="file://$PROJECT_DIR$/immersion/immersion.iml" filepath="$PROJECT_DIR$/immersion/immersion.iml" group="myGit/immersion" />
+      <module fileurl="file://$PROJECT_DIR$/jni_test/jni_test.iml" filepath="$PROJECT_DIR$/jni_test/jni_test.iml" group="myGit/jni_test" />
       <module fileurl="file://$PROJECT_DIR$/jniexampleproject/jniexampleproject.iml" filepath="$PROJECT_DIR$/jniexampleproject/jniexampleproject.iml" group="myGit/jniexampleproject" />
       <module fileurl="file://$PROJECT_DIR$/kotlindebug/kotlindebug.iml" filepath="$PROJECT_DIR$/kotlindebug/kotlindebug.iml" group="myGit/kotlindebug" />
       <module fileurl="file://$PROJECT_DIR$/myGit.iml" filepath="$PROJECT_DIR$/myGit.iml" group="myGit" />
