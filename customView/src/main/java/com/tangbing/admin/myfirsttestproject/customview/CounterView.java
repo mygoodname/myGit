@@ -4,11 +4,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.tangbing.admin.myfirsttestproject.R;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by admin on 2019/1/28.

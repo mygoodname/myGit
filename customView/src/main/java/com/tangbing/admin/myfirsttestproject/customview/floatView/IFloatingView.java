@@ -1,9 +1,11 @@
 package com.tangbing.admin.myfirsttestproject.customview.floatView;
 
 import android.app.Activity;
-import android.support.annotation.DrawableRes;
+
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import androidx.annotation.DrawableRes;
 
 /**
  * Created by Yunpeng Li on 2018/3/15.

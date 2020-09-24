@@ -1,19 +1,21 @@
 package com.tangbing.admin.myfirsttestproject;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
 
 import com.tangbing.admin.myfirsttestproject.adapter.CustomListViewAdapter;
 import com.tangbing.admin.myfirsttestproject.customview.CustomListView;
 
 import java.util.ArrayList;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 /**
  * Created by admin on 2019/1/29.
  */
 
-public class CustomListViwActivity extends AppCompatActivity{
+public class CustomListViwActivity extends AppCompatActivity {
     CustomListView customList;
     ArrayList<String> list=new ArrayList<>();
     @Override

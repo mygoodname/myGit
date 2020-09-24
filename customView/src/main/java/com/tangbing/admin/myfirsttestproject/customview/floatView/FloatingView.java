@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.DrawableRes;
-import android.support.v4.view.ViewCompat;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -13,6 +11,9 @@ import android.widget.RelativeLayout;
 
 import com.tangbing.admin.myfirsttestproject.FloatBallLocationListener;
 import com.tangbing.admin.myfirsttestproject.FloatBallMoveListener;
+
+import androidx.annotation.DrawableRes;
+import androidx.core.view.ViewCompat;
 
 
 /**

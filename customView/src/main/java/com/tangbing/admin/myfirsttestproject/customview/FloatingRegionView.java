@@ -1,8 +1,7 @@
 package com.tangbing.admin.myfirsttestproject.customview;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,6 +15,9 @@ import android.widget.TextView;
 
 import com.tangbing.admin.myfirsttestproject.AnimationEndListener;
 import com.tangbing.admin.myfirsttestproject.R;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Created by tangbing on 2019/7/31.

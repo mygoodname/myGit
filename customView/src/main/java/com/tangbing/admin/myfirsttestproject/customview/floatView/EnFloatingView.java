@@ -1,8 +1,7 @@
 package com.tangbing.admin.myfirsttestproject.customview.floatView;
 
 import android.content.Context;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
+
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -10,6 +9,8 @@ import android.view.animation.LinearInterpolator;
 import com.tangbing.admin.myfirsttestproject.FloatBallMoveListener;
 import com.tangbing.admin.myfirsttestproject.R;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 

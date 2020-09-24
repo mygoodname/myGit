@@ -6,13 +6,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 
 import com.tangbing.admin.myfirsttestproject.util.Utils;
+
+import androidx.annotation.Nullable;
 
 public class MyWaveView extends View {
 

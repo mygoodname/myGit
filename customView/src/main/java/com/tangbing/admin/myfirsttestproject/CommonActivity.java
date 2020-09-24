@@ -1,18 +1,20 @@
 package com.tangbing.admin.myfirsttestproject;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
 import android.view.View;
 import android.view.Window;
 
 import com.tangbing.admin.myfirsttestproject.util.ActivityUtils;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 /**
  * Created by admin on 2019/3/4.
  */
 
-public class CommonActivity extends AppCompatActivity{
+public class CommonActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -3,10 +3,7 @@ package com.tangbing.admin.myfirsttestproject;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
-import android.support.annotation.IdRes;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
 import android.view.View;
 import android.widget.SeekBar;
 import com.larswerkman.lobsterpicker.OnColorListener;
@@ -14,12 +11,17 @@ import com.larswerkman.lobsterpicker.sliders.LobsterShadeSlider;
 import com.tangbing.admin.myfirsttestproject.customview.CircleProgressView;
 import com.tangbing.admin.myfirsttestproject.customview.HorizontalProgressView;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.IdRes;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 /**
  * Created by tangbing on 2019/4/30.
  * Describe :
  */
 
-public class CustomProgressActivity extends AppCompatActivity{
+public class CustomProgressActivity extends AppCompatActivity {
 
 
     private SeekBar mSeekBarOuter;

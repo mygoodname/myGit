@@ -5,10 +5,12 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.annotation.Nullable;
+
 import android.util.AttributeSet;
 import android.view.View;
 import com.tangbing.admin.myfirsttestproject.R;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by tangbing on 2020/4/29.

@@ -5,13 +5,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v4.view.ViewCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import com.tangbing.admin.myfirsttestproject.customview.floatView.EnContext;
 import com.tangbing.admin.myfirsttestproject.customview.floatView.FloatingView;
+
+import androidx.core.view.ViewCompat;
 
 /**
  * Created by tangbing on 2019/8/1.
