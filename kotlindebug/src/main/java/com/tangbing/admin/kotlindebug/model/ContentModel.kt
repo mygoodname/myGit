@@ -6,5 +6,6 @@ package com.tangbing.admin.kotlindebug.model
  *
  */
 class ContentModel {
-
+    lateinit var a:String
+    var b:Int=0
 }

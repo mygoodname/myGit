@@ -16,9 +16,11 @@
 package com.tangbing.admin.zxingtest;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+
 import android.view.View;
 
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.king.zxing.CaptureActivity;
 

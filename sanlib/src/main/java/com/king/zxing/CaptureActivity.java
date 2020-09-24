@@ -17,10 +17,12 @@ package com.king.zxing;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
+
 import android.view.MotionEvent;
 import android.view.SurfaceView;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.Nullable;
 
 import com.king.zxing.camera.CameraManager;
 
